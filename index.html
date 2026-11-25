@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sondos ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #2c0f26 0%, #130716 65%, #09030b 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px 16px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* إيموجي في الأربع أطراف */
+        .corner-emoji {
+            position: fixed;
+            font-size: 1.7rem;
+            z-index: 20;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .top-right { top: 14px; right: 16px; }
+        .top-left { top: 14px; left: 16px; }
+        .bottom-right { bottom: 14px; right: 16px; }
+        .bottom-left { bottom: 14px; left: 16px; }
+
+        /* بلالين الاحتفال */
+        .balloons-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 15;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -80px;
+            font-size: 2.3rem;
+            animation: floatUp 4s ease-in forwards;
+            user-select: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50vh) translateX(16px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-110vh) translateX(-16px);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 140, 185, 0.28);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 28px 22px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+            position: relative;
+            z-index: 10;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 105, 165, 0.16);
+            border: 1px solid rgba(255, 105, 165, 0.35);
+            color: #ffa3c7;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .date-tag {
+            font-size: 0.92rem;
+            color: #ffd1e3;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 1.65rem;
+            line-height: 1.4;
+            color: #ff85b3;
+            margin-bottom: 12px;
+        }
+
+        .tease {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 15px;
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #fff0f6;
+            margin-bottom: 16px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 13px 15px;
+            border-radius: 14px;
+            border: 1.5px solid rgba(255, 133, 179, 0.42);
+            background: rgba(10, 4, 12, 0.8);
+            color: #fff;
+            font-size: 1.05rem;
+            text-align: center;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ff69a5;
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 13px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #ff4d8d, #c92a6d);
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        /* الرسالة التي تظهر مباشرة تحت زرار دخول */
+        #resultBelowBtn {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            font-size: 0.96rem;
+            line-height: 1.75;
+            display: none;
+        }
+
+        .msg-error {
+            display: block !important;
+            background: rgba(255, 77, 109, 0.16);
+            border: 1px solid rgba(255, 110, 140, 0.45);
+            color: #ffb3c1;
+        }
+
+        .msg-success {
+            display: block !important;
+            background: rgba(255, 105, 165, 0.18);
+            border: 1px solid rgba(255, 140, 190, 0.55);
+            color: #ffe6f0;
+            font-weight: 600;
+        }
+
+        .countdown-line {
+            margin-top: 8px;
+            font-size: 0.92rem;
+            color: #ffc2da;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* صفحة الرسايل */
+        .msg-counter {
+            font-size: 0.9rem;
+            color: #ffc2da;
+            margin-bottom: 12px;
+        }
+
+        .message-box {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.32);
+            border-right: 4px solid #ff69a5;
+            border-left: 4px solid #ff69a5;
+            border-radius: 16px;
+            padding: 22px 16px;
+            line-height: 1.9;
+            font-size: 1.06rem;
+            color: #fff5f9;
+            min-height: 155px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: pre-line;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            margin-top: 0;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+        }
+
+        footer {
+            margin-top: 22px;
+            font-size: 0.9rem;
+            color: #f3b8d0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- إيموجي الأربع أطراف -->
+    <div class="corner-emoji top-right">🎈</div>
+    <div class="corner-emoji top-left">🎉</div>
+    <div class="corner-emoji bottom-right">❤️</div>
+    <div class="corner-emoji bottom-left">🎂</div>
+
+    <!-- طبقة البالونات -->
+    <div class="balloons-layer" id="balloonsLayer"></div>
+
+    <!-- الصفحة الأولى: الباسورد -->
+    <div class="card" id="passwordPage">
+        <div class="badge">🎂 Happy Birthday Sondos Fathy 🎂</div>
+        <div class="date-tag">23/11/2026</div>
+        <h1>🎉 كل سنة وأنتِ طيبة يا سندس 🎉</h1>
+
+        <div class="tease">
+            خمني الباسورد ي انسه مفيش حاجه بتيجي بالساهل اكتبي اي حاجه 😂
+        </div>
+
+        <input type="text" id="passwordInput" placeholder="اكتبي الباسورد هنا..." autocomplete="off">
+        <button type="button" class="btn" id="loginBtn">دخول ❤️</button>
+
+        <!-- تظهر هنا مباشرة تحت زرار دخول -->
+        <div id="resultBelowBtn"></div>
+
+        <footer>❤️ From CAP Medhat ❤️</footer>
+    </div>
+
+    <!-- الصفحة الثانية: الرسايل -->
+    <div class="card hidden" id="messagesPage">
+        <div class="badge">💌 رسايل ليكي يا سندس 💌</div>
+        <div class="date-tag">23/11/2026</div>
+        <div class="msg-counter" id="msgCounter">الرسالة 1 من 8</div>
+
+        <div class="message-box" id="messageText"></div>
+
+        <div class="nav-controls">
+            <button type="button" class="btn nav-btn secondary-btn" id="prevBtn">السابق</button>
+            <button type="button" class="btn nav-btn" id="nextBtn">التالي</button>
+        </div>
+
+        <footer>❤️ From CAP Medhat — 23/11/2026 ❤️</footer>
+    </div>
+
+    <script>
+        (function () {
+            const CORRECT_PASSWORD = "تؤ";
+            const FIRST_WRONG_MSG = "اكيد الباسورد غلط أنا شخص غير متوقع يعني  عموما هي الصوت الل بتعمليه ببوقك لما تتضايقي وانا قولتلك بقيت زيك فيه 😂😂";
+            const SECOND_WRONG_MSG = "تؤ بقا مينفعش كدا فكري كويس 😂😂";
+            const SUCCESS_MSG = "ايوووه كدا شطووورة وتستاهلي تدخلي ع صفحة الرسايل 😂";
+
+            const MESSAGES = [
+                "♥️كل سنة وانتي طيبة ي سندسسسسس وبخير دايما يارب ♥️",
+                "أنا استغليت حاجه بفهم فيها وقولت اعمل هديه كرييتف وجديده متعملتش قبل كدا مبحبش اعمل حاجه تقليديه أنا 😂",
+                "الهديه دي حاجه بسيطه ليكي يارب تفرحك ولو بسيط والحلو فيها انها بتفضل مفتوحه دايما لو حبيتي ترجعيلها. و  بقالي تلت ايام ببرمج ف الموقع دا حسبي الله ونعم الوكيل 😂😂",
+                "اهو بصي بتضحكي ومبتسمه ازاي   😂",
+                "ربنا يوفقك باذن الله ي سندس ويحقق لك كل الل نفسك فيه",
+                "نصيحه من الكابتن بتاعك متخليش حاجه تيأسك ولا تحبطك بسهوله الدنيا سهله بس مش عايزه الضعيف الل يستسلم من اول خبطه لان الدنيا مش مثاليه والناس كذلك.",
+                "مش عارف اكتب اي بس انا واثق انك هتبقي توب ف كل حاجه ناقص انتي تثقي ف دا 😂",
+                "يلا سلامو عليكووو🎂🎉"
+            ];
+
+            let wrongCount = 0;
+            let msgIndex = 0;
+            let timerId = null;
+            let balloonsId = null;
+
+            const passwordInput = document.getElementById("passwordInput");
+            const loginBtn = document.getElementById("loginBtn");
+            const resultBelowBtn = document.getElementById("resultBelowBtn");
+            const passwordPage = document.getElementById("passwordPage");
+            const messagesPage = document.getElementById("messagesPage");
+            const messageText = document.getElementById("messageText");
+            const msgCounter = document.getElementById("msgCounter");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const balloonsLayer = document.getElementById("balloonsLayer");
+
+            function showError(text) {
+                resultBelowBtn.className = "msg-error";
+                resultBelowBtn.textContent = text;
+            }
+
+            function spawnBalloons() {
+                const icons = ["🎈", "🎉", "💖", "✨"];
+                for (let i = 0; i < 8; i++) {
+                    const el = document.createElement("div");
+                    el.className = "balloon";
+                    el.textContent = icons[i % icons.length];
+                    el.style.left = (Math.random() * 88 + 4) + "%";
+                    el.style.animationDuration = (3.4 + Math.random() * 1.4) + "s";
+                    el.style.animationDelay = (Math.random() * 0.4) + "s";
+                    balloonsLayer.appendChild(el);
+                    setTimeout(() => el.remove(), 5200);
+                }
+            }
+
+            function startCelebration() {
+                spawnBalloons();
+                balloonsId = setInterval(spawnBalloons, 1100);
+                setTimeout(() => clearInterval(balloonsId), 9500);
+            }
+
+            function goToMessages() {
+                passwordPage.classList.add("hidden");
+                messagesPage.classList.remove("hidden");
+                msgIndex = 0;
+                updateMessageView();
+            }
+
+            function updateMessageView() {
+                messageText.textContent = MESSAGES[msgIndex];
+                msgCounter.textContent = `الرسالة ${msgIndex + 1} من ${MESSAGES.length}`;
+                prevBtn.disabled = msgIndex === 0;
+                nextBtn.disabled = msgIndex === MESSAGES.length - 1;
+            }
+
+            function handleLogin() {
+                const val = passwordInput.value.trim();
+
+                if (!val) {
+                    showError("اكتبي أي حاجة الأول يا آنسة متسيبهاش فاضية 😂");
+                    return;
+                }
+
+                if (val === CORRECT_PASSWORD) {
+                    passwordInput.disabled = true;
+                    loginBtn.disabled = true;
+
+                    let left = 10;
+                    resultBelowBtn.className = "msg-success";
+                    resultBelowBtn.innerHTML = `
+                        <div>${SUCCESS_MSG}</div>
+                        <div class="countdown-line" id="cdLine">هتفتح صفحة الرسايل خلال ${left} ثواني...</div>
+                    `;
+
+                    startCelebration();
+
+                    timerId = setInterval(() => {
+                        left--;
+                        const cdLine = document.getElementById("cdLine");
+                        if (left > 0) {
+                            if (cdLine) {
+                                cdLine.textContent = `هتفتح صفحة الرسايل خلال ${left} ثواني...`;
+                            }
+                        } else {
+                            clearInterval(timerId);
+                            goToMessages();
+                        }
+                    }, 1000);
+                } else {
+                    wrongCount++;
+                    if (wrongCount === 1) {
+                        showError(FIRST_WRONG_MSG);
+                    } else {
+                        showError(SECOND_WRONG_MSG);
+                    }
+                }
+            }
+
+            loginBtn.addEventListener("click", handleLogin);
+
+            passwordInput.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" && !passwordInput.disabled) {
+                    handleLogin();
+                }
+            });
+
+            prevBtn.addEventListener("click", function () {
+                if (msgIndex > 0) {
+                    msgIndex--;
+                    updateMessageView();
+                }
+            });
+
+            nextBtn.addEventListener("click", function () {
+                if (msgIndex < MESSAGES.length - 1) {
+                    msgIndex++;
+                    updateMessageView();
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
